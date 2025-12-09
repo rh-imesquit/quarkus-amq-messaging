@@ -37,7 +37,7 @@ public class JmsProducerResource {
             Queue queue = context.createQueue(queueName);
             
             JMSProducer producer = context.createProducer();
-            producer.setTimeToLive(5000);
+            producer.setTimeToLive(10000);
 
             for (int i = 1; i <= 10; i++) {
                 String body = "Mensagem JMS " + i;
