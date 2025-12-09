@@ -41,13 +41,12 @@
             <artifactId>quarkus-arc</artifactId>
         </dependency>
 
-        <!-- REST + JSON -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+            <artifactId>quarkus-rest</artifactId>
         </dependency>
 
-        <!-- JMS com ActiveMQ Artemis (extensão QUARKIVERSE) -->
+        <!-- JMS com ActiveMQ Artemis -->
         <dependency>
             <groupId>io.quarkiverse.artemis</groupId>
             <artifactId>quarkus-artemis-jms</artifactId>
