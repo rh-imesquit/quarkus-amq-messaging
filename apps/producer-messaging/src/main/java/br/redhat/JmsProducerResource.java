@@ -35,7 +35,9 @@ public class JmsProducerResource {
 
         try (JMSContext context = connectionFactory.createContext()) {
             Queue queue = context.createQueue(queueName);
+            
             JMSProducer producer = context.createProducer();
+            producer.setTimeToLive(0);
 
             for (int i = 1; i <= 10; i++) {
                 String body = "Mensagem JMS " + i;
