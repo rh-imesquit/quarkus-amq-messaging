@@ -13,8 +13,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- Versão da plataforma Quarkus (um pouco mais antiga, estável) -->
-        <quarkus.platform.version>3.15.7</quarkus.platform.version>
+        <!-- Plataforma Quarkus ALINHADA com o Artemis 3.11.1 -->
+        <quarkus.platform.version>3.30.2</quarkus.platform.version>
 
         <compiler-plugin.version>3.14.1</compiler-plugin.version>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
@@ -47,11 +47,10 @@
             <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
         </dependency>
 
-        <!-- JMS com ActiveMQ Artemis -->
+        <!-- JMS com ActiveMQ Artemis (extensão QUARKIVERSE) -->
         <dependency>
             <groupId>io.quarkiverse.artemis</groupId>
             <artifactId>quarkus-artemis-jms</artifactId>
-            <!-- versão compatível; extensão comunitária -->
             <version>3.11.1</version>
         </dependency>
 
@@ -70,7 +69,7 @@
 
     <build>
         <plugins>
-            <!-- Plugin do Quarkus (note o groupId correto) -->
+            <!-- Plugin do Quarkus (groupId CORRETO) -->
             <plugin>
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
