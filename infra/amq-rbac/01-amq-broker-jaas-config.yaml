@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: amq-broker-jaas-config
+  namespace: activemq
+type: Opaque
+stringData:
+  login.config: |
+    activemq {
+        org.apache.activemq.artemis.spi.core.security.jaas.PropertiesLoginModule sufficient
+            reload=true
+            org.apache.activemq.jaas.properties.user="users.properties"
+            org.apache.activemq.jaas.properties.role="roles.properties";
+
+        org.apache.activemq.artemis.spi.core.security.jaas.PropertiesLoginModule sufficient
+            reload=false
+            org.apache.activemq.jaas.properties.user="artemis-users.properties"
+            org.apache.activemq.jaas.properties.role="artemis-roles.properties"
+            baseDir="/home/jboss/amq-broker/etc";
+    };
+
+    console {
+        org.apache.activemq.artemis.spi.core.security.jaas.PropertiesLoginModule sufficient
+            reload=true
+            org.apache.activemq.jaas.properties.user="users.properties"
+            org.apache.activemq.jaas.properties.role="roles.properties";
+
+        org.apache.activemq.artemis.spi.core.security.jaas.PropertiesLoginModule sufficient
+            reload=false
+            org.apache.activemq.jaas.properties.user="artemis-users.properties"
+            org.apache.activemq.jaas.properties.role="artemis-roles.properties"
+            baseDir="/home/jboss/amq-broker/etc";
+    };
+  users.properties: |
+    admin=admin123
+    rouser=ro123
+  roles.properties: |
+    admins=admin
+    leitores=rouser

@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: amq-broker-console-route
+  namespace: activemq
+  labels:
+    application: amq-broker-app
+spec:
+  to:
+    kind: Service
+    name: amq-broker-wconsj-0-svc
+    weight: 100
+  port:
+    targetPort: wconsj-0
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

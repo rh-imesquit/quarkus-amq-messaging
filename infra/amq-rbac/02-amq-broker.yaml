@@ -1,0 +1,60 @@
+apiVersion: broker.amq.io/v1beta1
+kind: ActiveMQArtemis
+metadata:
+  name: amq-broker
+  namespace: activemq
+spec:
+  deploymentPlan:
+    persistenceEnabled: true
+    size: 1
+    storage:
+      size: 2Gi
+    extraMounts:
+      secrets:
+        - "amq-broker-jaas-config"
+
+  console:
+    expose: true
+
+  env:
+    - name: JAVA_ARGS_APPEND
+      value: "-Dhawtio.role=* -Djavax.management.builder.initial=org.apache.activemq.artemis.core.server.management.ArtemisRbacMBeanServerBuilder"
+
+  brokerProperties:
+    - 'addressConfigurations."fila.teste".routingTypes=ANYCAST'
+    - 'addressConfigurations."fila.teste".queueConfigs."fila.teste".address=fila.teste'
+    - 'addressConfigurations."fila.teste".queueConfigs."fila.teste".routingType=ANYCAST'
+
+    - "securityRoles.#.admins.createAddress=true"
+    - "securityRoles.#.admins.deleteAddress=true"
+    - "securityRoles.#.admins.createDurableQueue=true"
+    - "securityRoles.#.admins.deleteDurableQueue=true"
+    - "securityRoles.#.admins.createNonDurableQueue=true"
+    - "securityRoles.#.admins.deleteNonDurableQueue=true"
+    - "securityRoles.#.admins.send=true"
+    - "securityRoles.#.admins.consume=true"
+    - "securityRoles.#.admins.browse=true"
+    - "securityRoles.#.admins.manage=true"
+
+    - "securityRoles.#.leitores.consume=true"
+    - "securityRoles.#.leitores.browse=true"
+
+    - 'securityRoles."mops.#".amq.view=true'
+    - 'securityRoles."mops.#".amq.edit=true'
+    - 'securityRoles."mops.#".admins.view=true'
+    - 'securityRoles."mops.#".admins.edit=true'
+    - 'securityRoles."mops.#".leitores.view=true'
+
+  resourceTemplates:
+    - selector:
+        kind: "StatefulSet"
+      patch:
+        kind: "StatefulSet"
+        spec:
+          template:
+            spec:
+              initContainers:
+                - name: "amq-broker-container-init"
+                  args:
+                    - "-c"
+                    - '/opt/amq/bin/launch.sh && /opt/amq-broker/script/default.sh; echo "Empty management.xml"; echo "<management-context xmlns=\"http://activemq.apache.org/schema\" />" > /amq/init/config/amq-broker/etc/management.xml'
